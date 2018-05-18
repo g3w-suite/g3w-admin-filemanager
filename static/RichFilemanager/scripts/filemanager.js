@@ -19,6 +19,7 @@ $.richFilemanagerPlugin = function(element, pluginOptions)
 	 */
 	var defaults = {
 		baseUrl: '.',	// relative path to the FM plugin folder
+		baseUrlConfig: '.',
 		config: {},		// configuration options
         callbacks: {
             beforeCreateImageUrl: function (resourceObject, url) {
@@ -3195,7 +3196,7 @@ $.richFilemanagerPlugin = function(element, pluginOptions)
 			if(_url_.param('config')) {
 				url = fm.settings.baseUrl + '/config/' + _url_.param('config');
 			} else {
-				url = fm.settings.baseUrl + '/config/filemanager.config.json';
+				url = fm.settings.baseUrlConfig + '/config/filemanager.config.json';
 			}
 		} else {
 			url = fm.settings.baseUrl + '/config/filemanager.config.default.json';

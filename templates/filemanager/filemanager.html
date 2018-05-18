@@ -547,11 +547,12 @@
                 src="{% static "RichFilemanager/scripts/purl/purl.min.js" %}"></script>
         <!-- Load filemanager script -->
         <script type="text/javascript"
-                src="{% static "RichFilemanager/scripts/filemanager.min.js" %}"></script>
+                src="{% static "RichFilemanager/scripts/filemanager.js" %}"></script>
 
         <!-- Start RichFilemanager plugin -->
         <script type="application/javascript">
             $(function () {
+
                 $('.fm-container').richFilemanager({
                     baseUrl: '{% static '/RichFilemanager' %}',
                 });
