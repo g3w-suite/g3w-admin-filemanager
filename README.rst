@@ -23,3 +23,10 @@ Add 'notes' module to G3WADMIN_LOCAL_MORE_APPS config value inside local_setting
         'filemanager'
         ...
     ]
+
+
+Sync tree menu by manage.py:
+
+::
+
+    ./manage.py sitetree_resync_apps filemanager

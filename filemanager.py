@@ -137,9 +137,9 @@ class FileManager:
         ''' Creates a new directory on the server within the given path. '''
         path        = self.request.GET.get('path').lstrip("/")
         name        = self.request.GET.get('name')
-        print(path,name)
+
         folder_path = os.path.join(self.root,path,name)
-        print(folder_path)
+
         if (self.is_safe_path(folder_path)):
            if not os.path.exists(folder_path):
                os.makedirs(folder_path)
