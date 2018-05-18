@@ -63,9 +63,11 @@ class FileManagerResponse(object):
             attributes['content']   = self.content
         self.attributes = attributes
 
-    def set_response(self):
+    def set_response(self, multi=False):
         response         = {}
         self.set_data()
+        if multi:
+            self.data = [self.data]
         response['data'] = self.data
         self.response    = response
 

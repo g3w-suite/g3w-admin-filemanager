@@ -68,7 +68,7 @@ class FileManager:
         path        = os.path.join(self.root,file)
         if (self.is_safe_path(path)):
            try:
-               response    = FileManagerResponse(path)
+               response    = FileManagerResponse(path, self.root)
                response.set_response()
                return JsonResponse(response.response)
            except Exception as e:
@@ -167,7 +167,7 @@ class FileManager:
                    default_storage.save(file_path, ContentFile(file.read()))
 
                    response  = FileManagerResponse(file_path, self.root)
-                   response.set_response()
+                   response.set_response(multi=True)
                    return JsonResponse(response.response)
                 else:
                    return self.fileManagerError(path=filename)
@@ -190,15 +190,15 @@ class FileManager:
         else:
            oldname = parts.pop()
            path     = '/'.join(parts)
-           new_path = os.path.join(self.root,path,new)
+           new_path = os.path.join(self.root, path, new)
         if (self.is_safe_path(new_path)):
            os.rename(old_path, new_path)
-           response = FileManagerResponse(new_path)
+           response = FileManagerResponse(new_path, root=self.root)
            response.set_response()
            return JsonResponse(response.response)
         else:
            return self.fileManagerError(path=new_path)
-#===============================================================================
+
     def move(self):
         ''' Moves file or folder to specified directory. '''
         # Relative path of the source file/folder to move. e.g. "/images/logo.png"
@@ -216,12 +216,12 @@ class FileManager:
               look = new_path
            else:
               look = new_path+'/'+parts[len(parts)-1]
-           response = FileManagerResponse(look)
+           response = FileManagerResponse(look, root=self.root)
            response.set_response()
            return JsonResponse(response.response)
         else:
            return self.fileManagerError(path=new)
-#===============================================================================
+
     def copy(self):
         ''' Copies file or folder to specified directory. '''
         # Relative path of the source file/folder to move. e.g. "/images/logo.png"
@@ -235,12 +235,12 @@ class FileManager:
         new_path = os.path.join(self.root,new,filename)
         if (self.is_safe_path(new_path) and self.is_safe_path(old_path)):
            shutil.copyfile(old_path, new_path)
-           response = FileManagerResponse(new_path)
+           response = FileManagerResponse(new_path, root=self.root)
            response.set_response()
            return JsonResponse(response.response)
         else:
            return self.fileManagerError(path=new)
-#===============================================================================
+
     def savefile(self):
         ''' Overwrites the content of the specific file to the "content" request parameter value. '''
         file    = self.request.POST.get('path').lstrip("/")
@@ -250,17 +250,17 @@ class FileManager:
            if os.path.isfile(path):
                with open(path, "w") as fh:
                    fh.write(content)
-           response = FileManagerResponse(path)
+           response = FileManagerResponse(path, root=self.root)
            response.set_response()
            return JsonResponse(response.response)
         else:
            return self.fileManagerError(path=file)
-#===============================================================================
+
     def delete(self):
         ''' Deletes an existed file or folder. '''
         file    = self.request.GET.get('path').lstrip("/")
-        path    = os.path.join(self.root,file)
-        response = FileManagerResponse(path)
+        path    = os.path.join(self.root, file)
+        response = FileManagerResponse(path, root=self.root)
         response.set_response()
         if (self.is_safe_path(path)):
            if os.path.isdir(path):
@@ -287,7 +287,7 @@ class FileManager:
         filename = parts.pop()
         # Check for AJAX request
         if self.request.is_ajax():
-            response = FileManagerResponse(path)
+            response = FileManagerResponse(path, root=self.root)
             response.set_response()
             return JsonResponse(response.response)
         else:
@@ -410,8 +410,8 @@ class FileManager:
                zip_ref.extractall(target_path)
            data            = []
            for file in os.listdir(target_path):
-               path        = os.path.join(target_path,file)
-               response    = FileManagerResponse(path)
+               path        = os.path.join(target_path, file)
+               response    = FileManagerResponse(path, root=self.root)
                response.set_data()
                data.append(response.data)
            results         = {}
