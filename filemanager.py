@@ -7,14 +7,10 @@ import os
 import shutil
 import tempfile
 import mimetypes
-import datetime
 import glob
 from mimetypes import MimeTypes
 from zipfile import ZipFile
-#from flask import request, JsonResponse, send_file
 from werkzeug.utils import secure_filename
-#from .FileManagerResponse import *
-#from flask import current_app as app
 
 
 class FileManager:
@@ -136,7 +132,7 @@ class FileManager:
                return self.fileManagerError(path=folder,title="NOT_ALLOWED")
         else:
            return self.fileManagerError(path=folder,title="NOT_ALLOWED")
-#===============================================================================
+
     def addfolder(self):
         ''' Creates a new directory on the server within the given path. '''
         path        = self.request.GET.get('path').lstrip("/")
@@ -247,8 +243,8 @@ class FileManager:
 #===============================================================================
     def savefile(self):
         ''' Overwrites the content of the specific file to the "content" request parameter value. '''
-        file    = request.form.get('path').lstrip("/")
-        content = request.form.get('content')
+        file    = self.request.POST.get('path').lstrip("/")
+        content = self.request.POST.get('content')
         path    = os.path.join(self.root,file)
         if (self.is_safe_path(path)):
            if os.path.isfile(path):
@@ -312,7 +308,7 @@ class FileManager:
                    def remove_file(response):
                        try:
                           # I think remove_file gets called for everything
-                          if request.form.get('mode')=='download' and dirpath:
+                          if self.request.POST.get('mode')=='download' and dirpath:
                                shutil.rmtree(dirpath)
                                dirpath=None
                        except Exception as error:
@@ -352,7 +348,7 @@ class FileManager:
                      file=path)
         else:
            return self.fileManagerError(path=file)
-#===============================================================================
+
     def directory_size(self,path):
         total_size = 0
         total_files = 0
@@ -398,18 +394,19 @@ class FileManager:
         result                  = {}
         result['data']          = data
         return JsonResponse(result)
-#===============================================================================
+
     def extract(self):
         ''' Extract files and folders from zip archive.
         Note that only the first-level of extracted files and folders are returned
         in the response. All nested files and folders should be omitted for correct
         displaying at the client-side. '''
-        source          = request.form.get('source').lstrip("/")
-        source_path     = os.path.join(self.root,source)
-        target          = request.form.get('target').lstrip("/")
-        target_path     = os.path.join(self.root,target)
-        if (self.is_safe_path(source_path) and self.is_safe_path(target_path)):
-           with ZipFile(source_path,"r") as zip_ref:
+        source          = self.request.POST.get('source').lstrip("/")
+        source_path     = os.path.join(self.root, source)
+        target          = self.request.POST.get('target').lstrip("/")
+        target_path     = os.path.join(self.root, target)
+
+        if self.is_safe_path(source_path) and self.is_safe_path(target_path):
+           with ZipFile(source_path, "r") as zip_ref:
                zip_ref.extractall(target_path)
            data            = []
            for file in os.listdir(target_path):
@@ -422,8 +419,8 @@ class FileManager:
            return JsonResponse(results)
         else:
            return self.fileManagerError(path=target_path)
-#===============================================================================
-    def error(self,title='Server Error. Unexpected Mode.',path="/"):
+
+    def error(self,title='Server Error. Unexpected Mode.', path="/"):
         '''  '''
         result           = {}
         errors           = []
@@ -441,9 +438,9 @@ class FileManager:
         response.status_code =  500
         return response
 
-#===============================================================================
+
     def is_binary_file(self,filepathname):
-        textchars = bytearray([7,8,9,10,12,13,27]) + bytearray(range(0x20, 0x7f)) + bytearray(range(0x80, 0x100))
+        textchars = bytearray([7, 8, 9, 10, 12, 13, 27]) + bytearray(range(0x20, 0x7f)) + bytearray(range(0x80, 0x100))
         is_binary_string = lambda bytes: bool(bytes.translate(None, textchars))
         try:
             if is_binary_string(open(filepathname, 'rb').read(1024)):

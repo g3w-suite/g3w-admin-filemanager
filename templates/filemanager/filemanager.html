@@ -14,6 +14,8 @@
           href="{% static "RichFilemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" %}"/>
     <link rel="stylesheet" type="text/css"
           href="{% static "RichFilemanager/scripts/alertify.js/dist/css/alertify.css" %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static "filemanager/css/style.css" %}">
 
     <style type="text/css">
         .fm-container .fm-loading-wrap {
@@ -36,6 +38,9 @@
     <div class="fm-loading-wrap"><!-- loading wrapper / removed when loaded --></div>
     <div class="fm-wrapper">
         <div class="fm-header">
+            <div class="g3wsuite-filemanager-logo">
+                <span class="logo-lg"><img src="{% static SETTINGS.G3WSUITE_MAIN_LOGO %}"></span>
+            </div>
             <div class="breadcrumbs">
                 <div class="nav-title" data-bind="text: breadcrumbsModel.getLabel"></div>
                 <div data-bind="foreach: {data: breadcrumbsModel.items, as: 'bcItem'}">
@@ -543,13 +548,13 @@
         <!-- Load filemanager script -->
         <script type="text/javascript"
                 src="{% static "RichFilemanager/scripts/filemanager.min.js" %}"></script>
-        <script type="text/javascript"
-                src="{% static "RichFilemanager/config/filemanager.init.js" %}"></script>
 
         <!-- Start RichFilemanager plugin -->
         <script type="application/javascript">
             $(function () {
-                $('.fm-container').richFilemanager();
+                $('.fm-container').richFilemanager({
+                    baseUrl: '/static/RichFilemanager',
+                });
             });
         </script>
     </div>

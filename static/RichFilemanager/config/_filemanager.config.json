@@ -1,16 +1,22 @@
 {
     "_comment": "IMPORTANT : go to the wiki page to know about options configuration https://github.com/servocoder/RichFilemanager/wiki/Configuration-options",
     "options": {
+        "culture": "en",
         "theme": "flat-dark",
+        "defaultViewMode": "grid",
+        "localizeGUI": true,
+        "showFullPath": false,
         "showTitleAttr": false,
         "showConfirmation": true,
         "browseOnly": false,
+        "clipboard": true,
+        "searchBox": true,
         "fileSorting": "NAME_ASC",
         "folderPosition": "bottom",
         "quickSelect": false,
         "logger": false,
         "allowFolderDownload": true,
-        "allowChangeExtensions": false,
+        "allowChangeExtensions": true,
         "capabilities": [
             "select",
             "upload",
@@ -18,19 +24,12 @@
             "rename",
             "copy",
             "move",
+            "replace",
             "delete",
             "extract",
+            "edit",
             "createFolder"
         ]
-    },
-    "language": {
-        "default": "it",
-        "available": ["it", "en"]
-    },
-    "formatter": {
-        "datetime": {
-            "skeleton": "yMMMdHm"
-        }
     },
     "filetree": {
         "enabled": true,
@@ -42,7 +41,6 @@
         "minWidth": 200
     },
     "manager": {
-        "defaultViewMode": "grid",
         "dblClickOpen": false,
         "selection": {
             "enabled": true,
@@ -63,30 +61,11 @@
         "maxNumberOfFiles": 5,
         "chunkSize": false
     },
-    "clipboard": {
-        "enabled": true,
-        "encodeCopyUrl": true
-    },
-    "filter": {
-        "image": ["jpg", "jpeg", "gif", "png", "svg"],
-        "media": ["ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav"],
-        "office": ["txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "md"],
-        "archive": ["zip", "tar", "rar"],
-        "audio": ["ogg", "mp3", "wav"],
-        "video": ["ogv", "avi", "mkv", "mp4", "webm", "m4v"]
-    },
-    "search": {
-        "enabled": true,
-        "recursive": false,
-        "caseSensitive": false,
-        "typingDelay": 500
-    },
     "viewer": {
         "absolutePath": false,
         "previewUrl": false,
         "image": {
             "enabled": true,
-            "lazyLoad": true,
             "showThumbs": true,
             "thumbMaxWidth": 64,
             "extensions": [
@@ -154,7 +133,10 @@
             "enabled": true,
             "extensions": [
                 "txt",
-                "csv"
+                "csv",
+                "xml",
+                "cnf",
+                "cfg"
             ]
         },
         "markdownRenderer": {
@@ -162,21 +144,23 @@
             "extensions": [
                 "md"
             ]
+        },
+        "editable": {
+            "enabled": true,
+            "theme": "default",
+            "lineNumbers": true,
+            "lineWrapping": true,
+            "codeHighlight": true,
+            "matchBrackets": true,
+            "extensions": [
+                "txt",
+                "csv",
+                "md",
+                "xml",
+                "cnf",
+                "cfg"
+            ]
         }
-    },
-    "editor": {
-        "enabled": true,
-        "theme": "default",
-        "lineNumbers": true,
-        "lineWrapping": true,
-        "codeHighlight": true,
-        "matchBrackets": true,
-        "extensions": [
-            "html",
-            "txt",
-            "csv",
-            "md"
-        ]
     },
     "customScrollbar": {
     	"enabled": true,
@@ -187,6 +171,12 @@
         "extra_js": [],
         "extra_js_async": true
     },
+    "search": {
+        "enabled": true,
+        "recursive": true,
+        "caseSensitive": false,
+        "typingDelay": 500
+    },
     "url": "https://github.com/servocoder/RichFilemanager",
-    "version": "2.7.0"
+    "version": "2.3.2"
 }

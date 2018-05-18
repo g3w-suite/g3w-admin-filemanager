@@ -54,13 +54,9 @@
         }
     },
     "api": {
-        "lang": "php",
-        "connectorUrl": false,
-        "requestParams": {
-            "GET": {},
-            "POST": {},
-            "MIXED": {}
-        }
+        "lang": "py",
+        "connectorUrl": "/filemanager/api/files/",
+        "requestParams": []
     },
     "upload": {
         "multiple": true,
