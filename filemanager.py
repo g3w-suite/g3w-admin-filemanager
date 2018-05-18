@@ -1,5 +1,5 @@
 from django.http.response import JsonResponse
-from django.core.files.storage import default_storage
+from django.core.files.storage import default_storage, FileSystemStorage
 from django.core.files.base import ContentFile
 from core.utils.response import send_file
 from .filemanagerresponse import FileManagerResponse
@@ -19,6 +19,8 @@ class FileManager:
         self.request = request
         if root_folder:
             self.root = root_folder
+
+        self.storage = FileSystemStorage(location=root_folder)
 
     def fileManagerError(self, title='FORBIDDEN_CHAR_SLASH', path='/'):
        return self.error(title, path)
@@ -161,7 +163,8 @@ class FileManager:
                 filename  = secure_filename(file.name)
                 file_path = os.path.join(self.root, path, filename)
                 if (self.is_safe_path(file_path)):
-                   default_storage.save(file_path, ContentFile(file.read()))
+
+                   self.storage.save(file_path, ContentFile(file.read()))
 
                    response  = FileManagerResponse(file_path, self.root)
                    response.set_response(multi=True)
