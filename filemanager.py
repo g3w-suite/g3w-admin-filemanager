@@ -15,9 +15,6 @@ from werkzeug.utils import secure_filename
 
 class FileManager:
 
-    # Path to your files root
-    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')
-
     def __init__(self, request, root_folder=None):
         self.request = request
         if root_folder:
