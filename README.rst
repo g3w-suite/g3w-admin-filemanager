@@ -24,6 +24,12 @@ Add 'notes' module to G3WADMIN_LOCAL_MORE_APPS config value inside local_setting
         ...
     ]
 
+Add root path folder for data (optional), if is not set root path is set to DATASOURCE_PATH:
+
+::
+
+    FILENAMAGER_ROOT_PATH = '<path_to_root_folder>'
+
 
 Sync tree menu by manage.py:
 

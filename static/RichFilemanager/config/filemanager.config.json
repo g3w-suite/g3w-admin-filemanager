@@ -38,7 +38,7 @@
         "reloadOnClick": true,
         "expandSpeed": 200,
         "showLine": true,
-        "width": 200,
+        "width": 300,
         "minWidth": 200
     },
     "manager": {

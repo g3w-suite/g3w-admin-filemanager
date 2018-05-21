@@ -31,7 +31,8 @@ class FilemanagerServeConfigView(View):
         config = json.load(file)
         file.close()
 
-        # try to change language
+        # get current language
+        config['language']['default'] = request.LANGUAGE_CODE
         return JsonResponse(config)
 
 
@@ -42,7 +43,12 @@ def files_view(request):
     File Manager API endpoint
     '''
 
-    fileManager = FileManager(request, root_folder=settings.DATASOURCE_PATH[:-1])
+    try:
+        root_folder = settings.FILEMANAGER_ROOT_PATH
+    except:
+        root_folder = settings.DATASOURCE_PATH[:-1]
+
+    fileManager = FileManager(request, root_folder=root_folder)
 
     mode = None
     if request.method == 'POST':
