@@ -1,3 +1,5 @@
+# Code modified from https://github.com/jsooter/RichFilemanager-Python3Flask/
+
 from django.conf import settings
 from django.http.response import JsonResponse
 from django.core.files.storage import default_storage, FileSystemStorage
