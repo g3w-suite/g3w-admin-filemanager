@@ -44,9 +44,15 @@ def files_view(request):
     '''
 
     try:
-        root_folder = settings.FILEMANAGER_ROOT_PATH
+        if settings.FILEMANAGER_ROOT_PATH.endswith('/'):
+            root_folder = settings.FILEMANAGER_ROOT_PATH[:-1]
+        else:
+            root_folder = settings.FILEMANAGER_ROOT_PATH
     except:
-        root_folder = settings.DATASOURCE_PATH[:-1]
+        if settings.DATASOURCE_PATH.endswith('/'):
+            root_folder = settings.DATASOURCE_PATH[:-1]
+        else:
+            root_folder = settings.DATASOURCE_PATH
 
     fileManager = FileManager(request, root_folder=root_folder)
 

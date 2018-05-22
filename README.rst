@@ -28,7 +28,7 @@ Add root path folder for data (optional), if is not set root path is set to DATA
 
 ::
 
-    FILENAMAGER_ROOT_PATH = '<path_to_root_folder>'
+    FILEMANAGER_ROOT_PATH = '<path_to_root_folder>'
 
 
 Sync tree menu by manage.py:

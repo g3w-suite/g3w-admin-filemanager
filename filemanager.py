@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http.response import JsonResponse
 from django.core.files.storage import default_storage, FileSystemStorage
 from django.core.files.base import ContentFile
@@ -12,6 +13,8 @@ from mimetypes import MimeTypes
 from zipfile import ZipFile
 from werkzeug.utils import secure_filename
 
+
+PROJECTS_PATH = '{}{}'.format(settings.MEDIA_ROOT, 'projects')
 
 class FileManager:
 
@@ -80,10 +83,17 @@ class FileManager:
         folder          = self.request.GET.get('path').lstrip("/")
         folder_path     = os.path.join(self.root, folder)
         data            = []
+
+        # check fro projects, not ALLOWED
+        if folder_path == PROJECTS_PATH:
+            return self.fileManagerError(path=folder, title="NOT_ALLOWED")
+
         if (self.is_safe_path(folder_path)):
            try:
                for file in os.listdir(folder_path):
                    path        = os.path.join(folder_path, file)
+                   if path == PROJECTS_PATH:
+                       continue
                    response    = FileManagerResponse(path, self.root)
                    response.set_data()
                    data.append(response.data)
@@ -137,7 +147,10 @@ class FileManager:
         path        = self.request.GET.get('path').lstrip("/")
         name        = self.request.GET.get('name')
 
-        folder_path = os.path.join(self.root,path,name)
+        folder_path = os.path.join(self.root, path, name)
+
+        if folder_path == PROJECTS_PATH:
+            return self.fileManagerError(path=os.path.join("/", path, name), title="NOT_ALLOWED")
 
         if (self.is_safe_path(folder_path)):
            if not os.path.exists(folder_path):
