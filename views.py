@@ -17,6 +17,14 @@ class FilemanagerView(TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(FilemanagerView, self).dispatch(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        cdata = super(FilemanagerView, self).get_context_data(**kwargs)
+
+        # add title
+        cdata['page_title'] = getattr(settings, 'G3WSUITE_CUSTOM_TITLE', 'G3W-SUITE FileManager')
+
+        return cdata
+
 
 class FilemanagerServeConfigView(View):
 
