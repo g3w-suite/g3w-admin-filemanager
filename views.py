@@ -41,6 +41,11 @@ class FilemanagerServeConfigView(View):
 
         # get current language
         config['language']['default'] = request.LANGUAGE_CODE
+
+        # set upload property
+        if hasattr(settings, 'FILEMANAGER_MAX_UPLOAD_N_FILES'):
+            config['upload']['maxNumberOfFiles'] = settings.FILEMANAGER_MAX_UPLOAD_N_FILES
+
         return JsonResponse(config)
 
 
