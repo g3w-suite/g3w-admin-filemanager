@@ -46,6 +46,13 @@ class FilemanagerServeConfigView(View):
         if hasattr(settings, 'FILEMANAGER_MAX_UPLOAD_N_FILES'):
             config['upload']['maxNumberOfFiles'] = settings.FILEMANAGER_MAX_UPLOAD_N_FILES
 
+        # set site_prefix_url if is set
+        site_prefix_url = getattr(settings, 'SITE_PREFIX_URL', None)
+        if site_prefix_url:
+            config['api']['connectorUrl'] = '/{}filemanager/api/files/'.format(site_prefix_url)
+        else:
+            config['api']['connectorUrl'] = '/filemanager/api/files/'
+
         return JsonResponse(config)
 
 
