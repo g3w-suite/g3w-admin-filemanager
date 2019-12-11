@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse, HttpResponse
 from django.utils.decorators import method_decorator
 from usersmanage.decorators import user_passes_test_or_403
-from filemanager import FileManager
+from .filemanager import FileManager
 import json
 import os
 

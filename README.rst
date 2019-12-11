@@ -1,6 +1,6 @@
-=================
+=====================
 G3W-ADMIN-FILEMANAGER
-=================
+=====================
 
 G3W-ADMIN-FILEMANAGER is a files managment module.
 

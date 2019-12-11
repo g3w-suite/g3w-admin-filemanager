@@ -9,9 +9,9 @@ class FilemanagerConfig(AppConfig):
 
     def ready(self):
         from django.conf import settings
-        import filemanager_settings
-        for a in dir(filemanager_settings):
+        import filemanager.filemanager_settings
+        for a in dir(filemanager.filemanager_settings):
             if not a.startswith('__') and not hasattr(settings, a):
                 if not hasattr(settings, a):
-                    setattr(settings, a, getattr(filemanager_settings, a))
+                    setattr(settings, a, getattr(filemanager.filemanager_settings, a))
 
